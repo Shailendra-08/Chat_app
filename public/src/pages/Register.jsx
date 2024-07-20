@@ -5,10 +5,10 @@ import { useNavigate, Link } from "react-router-dom";
 import Logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-//import { registerRoute } from "../utils/APIRoutes";
+import { registerRoute } from "../utils/APIRoutes";
 
 export default function Register() {
-  
+  const navigate = useNavigate();
   const [values, setValues] = useState({
     username: "",
     email: "",
@@ -24,16 +24,26 @@ const toastOptions={
   theme:"dark",
 }
 
-const handleSubmit= async (event)=>{
-event.preventDefault();
-if(handleValidation()){
-  const { password, confirmPassword, username, email } = values;
-  const { data } = await axios.post(registerRoute, {
-    username,
-    email,
-    password,
-  });
-}
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  if (handleValidation()) {
+    const { password, username, email } = values;
+    try {
+      const { data } = await axios.post(registerRoute, {
+        username,
+        email,
+        password,
+      });
+      if (data.status === true) {
+        toast.success("Account created successfully!", toastOptions);
+       // navigate("/login");
+      } else {
+        toast.error(data.message, toastOptions);
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.", toastOptions);
+    }
+  }
 };
   
   const handleValidation = () => {
