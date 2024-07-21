@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { loginRoute } from "../utils/APIRoutes";
 
 export default function Login() {
+ 
   const navigate = useNavigate();
   const [values, setValues] = useState({ username: "", password: "" });
   const toastOptions = {
@@ -53,7 +54,7 @@ export default function Login() {
       if (data.status === true) {
         localStorage.setItem(
           import.meta.env.VITE_LOCALHOST_KEY,
-          JSON.stringify(data.user)
+          JSON.stringify(data.users)
         );
 
         navigate("/");
@@ -64,6 +65,7 @@ export default function Login() {
   return (
     <>
       <FormContainer>
+
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
             <img src={Logo} alt="logo" />
