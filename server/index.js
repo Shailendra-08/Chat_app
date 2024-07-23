@@ -35,3 +35,33 @@ const server =app.listen(process.env.PORT,() => {
     console.log(`Server started on Port ${process.env.PORT}`);
     connectDB();
 })
+
+// Socket Configuration
+
+const io = socket(server,{
+    cors:{
+        origin:"http://localhost:5173",
+        credentials:true,
+        
+    },
+});
+
+global.onlineUsers = new Map();
+
+io.on("connection",(socket)=>{
+    global.chatSocket =socket;
+    socket.on("add-user",(userId)=>
+    {
+        onlineUsers.set(userId,socket.id);
+
+    });
+
+    socket.on("send-msg",(data)=>{
+        const sendUserSocket = onlineUsers.get(data.to);
+        // console.log(data)
+        if(sendUserSocket){
+            socket.to(sendUserSocket).emit("msg-recivece",data.msg);
+        }
+    })
+
+})
