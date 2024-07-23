@@ -2,6 +2,9 @@ const express = require("express")
 const cors = require("cors")
 const mongoose = require("mongoose")
 const userRoutes = require("./Routes/userRoutes")
+const socket = require("socket.io");
+
+const messageRoutes = require('./Routes/messages')
 
 const app=express();
 require("dotenv").config();
@@ -24,6 +27,7 @@ const connectDB=async()=>{
 app.use(cors());
 app.use(express.json());
 app.use("/api/auth",userRoutes)
+app.use("/api/messages", messageRoutes);
 
 
 
