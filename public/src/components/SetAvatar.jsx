@@ -42,7 +42,7 @@ export default function SetAvatar() {
 
       if (data.isSet) {
         user.isAvatarImageSet = true;
-        user.avatarImage = data.image;
+        user.isAvatarImage = data.image;
         localStorage.setItem(
           import.meta.env.VITE_LOCALHOST_KEY,
           JSON.stringify(user)
@@ -60,7 +60,7 @@ export default function SetAvatar() {
       for (let i = 0; i < 4; i++) {
         const image = await axios.get(`${api}/${Math.round(Math.random() * 1000)}`);
         const buffer = Buffer.from(image.data);
-        data.push(buffer.toString("base64"));
+        data.push(buffer.toString("base64"));   
       }
       setAvatars(data);
       setIsLoading(false);
