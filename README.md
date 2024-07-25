@@ -5,7 +5,7 @@
 # Features 
     1. Login
     2. Register 
-    3. AvatarSetuo
+    3. AvatarSetup
     4. Sending Messsage real time using SOCKET-IO
     5. Logout 
 
